@@ -9,20 +9,15 @@ public class MazeGenerator {
     private Random rand;
 
     public MazeGenerator(int rows, int cols) {
-        System.out.println("MazeGenerator Constructor start: rows=" + rows + ", cols=" + cols);
         this.rows = rows;
         this.cols = cols;
         this.mazeArray = new int[rows][cols];
         this.rand = new Random();
-        System.out.println("MazeGenerator Constructor end");
-
     }
 
     public int[][] generateMaze() {
-        System.out.println("generateMaze() start");
         do {
             mazeArray = new int[rows][cols];
-            System.out.println("New MazeArray. rows: " + rows + ", cols: " + cols);
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     mazeArray[i][j] = rand.nextInt(2);
@@ -45,17 +40,14 @@ public class MazeGenerator {
         for (int i = 0; i < rows; i++) {
             System.out.println(Arrays.toString(mazeArray[i]));
         }
-        System.out.println("generateMaze() end");
         return mazeArray;
     }
 
     private boolean isValidMaze() {
-        System.out.println("isValidMaze() start");
         int[][] mazeArrayCopy = copyMazeArray(mazeArray);
         MazePath pathFinder = new MazePath(mazeArrayCopy);
         Position start = pathFinder.getStartPosition(mazeArrayCopy);
         pathFinder.setStartPosition(start);
-        System.out.println("start: " + start);
         return pathFinder.findPath();
     }
 

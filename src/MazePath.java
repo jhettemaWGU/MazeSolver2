@@ -53,7 +53,10 @@ public class MazePath {
             Position curr = path.peek();
             int y = curr.y;
             int x = curr.x;
-            mazeArray[y][x] = 4;
+            if (curr != start) {
+                mazeArray[y][x] = 4;
+            }
+
             boolean moved = false;
 
             if (moveTo(y - 1, x)) {
@@ -75,10 +78,15 @@ public class MazePath {
             if (!path.isEmpty() && mazeArray[path.peek().y][path.peek().x] == 2) {
                 return true;
             }
-
+            for (Position pos : path) {
+                System.out.print("path: " + pos.y + ", " + pos.x + "  ");
+            }
+            System.out.println();
         }
         System.out.println("No path found.");
         return false;
     }
+
+
 
 }

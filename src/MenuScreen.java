@@ -5,8 +5,8 @@ public class MenuScreen extends JPanel{
     private JFrame window;
     private MazePanel mazePanel;
 
+
     public MenuScreen(JFrame window) {
-        System.out.println("MenuScreen Constructor");
         this.window = window;
         this.setLayout(new BorderLayout());
 
@@ -22,12 +22,15 @@ public class MenuScreen extends JPanel{
         loadMazeButton.addActionListener(e -> mazePanel.loadNewMaze());
         buttonPanel.add(loadMazeButton);
 
+        JButton resetMazeButton = new JButton("Reset the maze");
+        resetMazeButton.addActionListener(e -> mazePanel.resetMaze());
+        buttonPanel.add(resetMazeButton);
+
         JButton runPathFinderButton = new JButton("Run PathFinder (Brute Force)");
         runPathFinderButton.addActionListener(e -> runPathFinder());
         buttonPanel.add(runPathFinderButton);
 
         this.add(buttonPanel, BorderLayout.SOUTH);
-        System.out.println("MenuScreen Constructor Complete");
 
         window.pack();
         window.setSize(new Dimension(mazePanel.getMazeWidth() + 40, mazePanel.getMazeHeight() + buttonPanel.getPreferredSize().height + 80));

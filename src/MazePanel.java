@@ -23,7 +23,6 @@ public class MazePanel extends JPanel {
         this.setDoubleBuffered(true);
 
         this.mazeArray = generator.generateMaze();
-        System.out.println("MazePanel Constructor End");
     }
 
     public int getMazeWidth() { return mazeArray[0].length * tileSize; }
@@ -58,6 +57,17 @@ public class MazePanel extends JPanel {
     public void loadNewMaze() {
         mazeArray = generator.generateMaze();
         this.setMaze(mazeArray);
+    }
+
+    public void resetMaze() {
+        for (int row = 0; row < mazeArray.length; row++) {
+            for (int col = 0; col < mazeArray[row].length; col++) {
+                if (mazeArray[row][col] == 4) {
+                    mazeArray[row][col] = 1;
+                }
+            }
+        }
+        repaint();
     }
 
     @Override
