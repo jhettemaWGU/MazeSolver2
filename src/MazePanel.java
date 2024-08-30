@@ -46,6 +46,8 @@ public class MazePanel extends JPanel {
                     g.setColor(Color.RED);
                 } else if (mazeArray[row][col] == 4) {
                     g.setColor(Color.BLUE);
+                } else if (mazeArray[row][col] == 5){
+                    g.setColor(Color.ORANGE);
                 } else {
                     g.setColor(Color.BLACK);
                 }
@@ -62,7 +64,7 @@ public class MazePanel extends JPanel {
     public void resetMaze() {
         for (int row = 0; row < mazeArray.length; row++) {
             for (int col = 0; col < mazeArray[row].length; col++) {
-                if (mazeArray[row][col] == 4) {
+                if (mazeArray[row][col] == 4 || mazeArray[row][col] == 5) {
                     mazeArray[row][col] = 1;
                 }
             }

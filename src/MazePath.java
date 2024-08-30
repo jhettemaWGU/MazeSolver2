@@ -1,16 +1,16 @@
 import java.util.LinkedList;
 
 public class MazePath {
-    private int[][] mazeArray;
-    private LinkedList<Position> path;
-    private Position start;
+    public int[][] mazeArray;
+    public LinkedList<Position> path;
+    public Position start;
 
 
     public MazePath(int[][] mazeArray) {
         this.mazeArray = mazeArray;
     }
 
-    private boolean isInBounds(int y, int x) {
+    public boolean isInBounds(int y, int x) {
         return y >= 0 && y < mazeArray.length && x >= 0 && x < mazeArray[0].length;
     }
 
@@ -87,6 +87,12 @@ public class MazePath {
         return false;
     }
 
-
-
+    public void reverseList(LinkedList<Position> path) {
+        int i = path.size();
+        int pos = 0;
+        while(i-- > 1) {
+            Position n = path.removeLast();
+            path.add(pos++, n);
+        }
+    }
 }

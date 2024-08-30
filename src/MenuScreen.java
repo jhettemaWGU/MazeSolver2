@@ -16,7 +16,7 @@ public class MenuScreen extends JPanel{
         this.add(mazeScrollPane, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 100));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 100));
 
         JButton loadMazeButton = new JButton("Load a new maze");
         loadMazeButton.addActionListener(e -> mazePanel.loadNewMaze());
@@ -30,8 +30,13 @@ public class MenuScreen extends JPanel{
         runPathFinderButton.addActionListener(e -> runPathFinder());
         buttonPanel.add(runPathFinderButton);
 
+        JButton runAStarButton = new JButton("Run PathFinder (AStar)");
+        runAStarButton.addActionListener(e -> runAStar());
+        buttonPanel.add(runAStarButton);
+
         this.add(buttonPanel, BorderLayout.SOUTH);
 
+        window.add(this);
         window.pack();
         window.setSize(new Dimension(mazePanel.getMazeWidth() + 40, mazePanel.getMazeHeight() + buttonPanel.getPreferredSize().height + 80));
     }
@@ -43,5 +48,11 @@ public class MenuScreen extends JPanel{
         pathFinder.setStartPosition(start);
         pathFinder.findPath();
         mazePanel.repaint();
+    }
+
+    private void runAStar() {
+        int[][] mazeArray = mazePanel.getMaze();
+        AStar aStarPath = new AStar(mazeArray, mazePanel);
+        aStarPath.findPathAStar();
     }
 }
