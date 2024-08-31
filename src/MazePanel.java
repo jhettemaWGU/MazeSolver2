@@ -7,12 +7,12 @@ public class MazePanel extends JPanel {
     private int[][] mazeArray;
 
     final int originalTileSize = 16;
-    final int scale = 3;
+    private int scale = 3;
     private int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = maxScreenCol * tileSize;
-    final int screenHeight = maxScreenRow * tileSize;
+    private int maxScreenCol = 16;
+    private int maxScreenRow = 12;
+    private int screenWidth = maxScreenCol * tileSize;
+    private int screenHeight = maxScreenRow * tileSize;
 
     public MazePanel() {
         System.out.println("MazePanel Constructor Start");
@@ -25,6 +25,13 @@ public class MazePanel extends JPanel {
         this.mazeArray = generator.generateMaze();
     }
 
+    private void updatePreferredSize() {
+        int screenWidth = maxScreenCol * tileSize;
+        int screenHeight = maxScreenRow * tileSize;
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        revalidate();
+    }
+
     public int getMazeWidth() { return mazeArray[0].length * tileSize; }
     public int getMazeHeight() { return mazeArray.length * tileSize; }
 
@@ -32,6 +39,28 @@ public class MazePanel extends JPanel {
 
     public void setMaze(int[][] newMazeArray) {
         this.mazeArray = newMazeArray;
+        repaint();
+    }
+
+    public void setMaxScreenCol(int maxScreenCol) {
+        this.maxScreenCol = maxScreenCol;
+        this.maxScreenRow = maxScreenCol * 3 / 4;
+        this.screenWidth = maxScreenCol * tileSize;
+        this.screenHeight = maxScreenRow * tileSize;
+        generator = new MazeGenerator(maxScreenRow, maxScreenCol);
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.mazeArray = generator.generateMaze();
+        revalidate();
+        repaint();
+    }
+
+    public void setScale (int scale) {
+        this.scale = scale;
+        this.tileSize = originalTileSize * scale;
+        this.screenWidth = maxScreenCol * tileSize;
+        this.screenHeight = maxScreenRow * tileSize;
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        revalidate();
         repaint();
     }
 

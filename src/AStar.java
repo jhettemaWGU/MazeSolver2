@@ -72,6 +72,15 @@ public class AStar extends MazePath {
         }
     }
 
+    public boolean aStarIsValid() {
+        findPathAStar();
+        if (allPositions.containsValue(end)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Position getStartPosition(int[][] mazeArray) {
         for (int i = 0; i < mazeArray.length; i++) {
             if (mazeArray[i][0] == 3) {
