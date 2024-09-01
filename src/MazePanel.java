@@ -5,6 +5,7 @@ public class MazePanel extends JPanel {
 
     private MazeGenerator generator;
     private int[][] mazeArray;
+    private JPanel loadingPanel;
 
     final int originalTileSize = 16;
     private int scale = 3;
@@ -14,8 +15,8 @@ public class MazePanel extends JPanel {
     private int screenWidth = maxScreenCol * tileSize;
     private int screenHeight = maxScreenRow * tileSize;
 
-    public MazePanel() {
-        System.out.println("MazePanel Constructor Start");
+    public MazePanel(JPanel loadingPanel) {
+        this.loadingPanel = loadingPanel;
         this.tileSize = tileSize;
         generator = new MazeGenerator(maxScreenRow, maxScreenCol);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -49,9 +50,7 @@ public class MazePanel extends JPanel {
         this.screenHeight = maxScreenRow * tileSize;
         generator = new MazeGenerator(maxScreenRow, maxScreenCol);
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.mazeArray = generator.generateMaze();
-        revalidate();
-        repaint();
+        loadNewMaze();
     }
 
     public void setScale (int scale) {
@@ -86,8 +85,32 @@ public class MazePanel extends JPanel {
     }
 
     public void loadNewMaze() {
-        mazeArray = generator.generateMaze();
-        this.setMaze(mazeArray);
+        loadingPanel.setVisible(true);
+        this.setVisible(false);
+        revalidate();
+        repaint();
+
+        SwingWorker<int[][], Void> worker = new SwingWorker<>() {
+            @Override
+            protected int[][] doInBackground() throws Exception {
+                return generator.generateMaze();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    setMaze(get());
+
+                    loadingPanel.setVisible(false);
+                    MazePanel.this.setVisible(true);
+                    revalidate();
+                    repaint();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        worker.execute();
     }
 
     public void resetMaze() {
